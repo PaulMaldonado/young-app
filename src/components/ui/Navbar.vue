@@ -54,6 +54,9 @@ export default {
 <style scoped>
     .bg-app {
         background-color: #ffffff;
+        -webkit-box-shadow: 0 0 9px rgba(0, 0, 0, 0.5) !important;
+        -moz-box-shadow: 0 0 9px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 0 9px rgba(0, 0, 0, 0.5) !important;
     }
 
     .home-app {

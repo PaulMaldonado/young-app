@@ -5,6 +5,7 @@ import Register from '../views/auth-views/Register.vue'
 import Profile from '../views/users/Profile.vue'
 import Create from '../views/crud-views/Create.vue'
 import Show from '../views/crud-views/Show.vue'
+import Edit from '../views/crud-views/Edit.vue'
 
 // firebase
 import firebase from 'firebase/app'
@@ -41,6 +42,11 @@ const routes = [
     path: '/show',
     name: 'Show',
     component: Show
+  },
+  {
+    path: '/edit/:id',
+    name: 'Edit',
+    component: Edit
   }
 ]
 
