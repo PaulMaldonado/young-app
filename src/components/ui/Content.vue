@@ -82,6 +82,10 @@ export default {
         }
     },
 
+    mounted() {
+        this.sessionPersistence();
+    },
+
     methods: {
         signIn() {
             firebase.auth().signInWithEmailAndPassword(this.email, this.password)
@@ -120,6 +124,16 @@ export default {
                 })
                 .catch(error => {
                     return error.message
+                })
+        },
+
+        sessionPersistence() {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                .then(() => {
+                    return this.signIn();
+                })
+                .catch(error => {
+                    console.error(error)
                 })
         }
     }

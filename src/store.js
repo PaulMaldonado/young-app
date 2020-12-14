@@ -8,13 +8,13 @@ export default new Vuex.Store({
         user: {
             logged: false,
             data: null
-        }
+        },
     },
 
     getters: {
         user(state) {
             return state.user
-        }
+        },
     },
 
     mutations: {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
         SET_USERS(state, data) {
             state.user.data = data
-        }
+        },
     },
 
     actions: {
@@ -38,6 +38,7 @@ export default new Vuex.Store({
                     photoURL: user.photoURL
                 })
             }
-        }
+        },
+
     }
 });

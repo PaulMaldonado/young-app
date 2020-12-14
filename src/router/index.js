@@ -5,7 +5,6 @@ import Register from '../views/auth-views/Register.vue'
 import Profile from '../views/users/Profile.vue'
 import Create from '../views/crud-views/Create.vue'
 import Show from '../views/crud-views/Show.vue'
-import Edit from '../views/crud-views/Edit.vue'
 
 // firebase
 import firebase from 'firebase/app'
@@ -23,14 +22,17 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    meta: {
+      guest: true
+    }
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
     meta: {
-      requiresAuth: true
+      auth: true
     }
   },
   {
@@ -43,11 +45,6 @@ const routes = [
     name: 'Show',
     component: Show
   },
-  {
-    path: '/edit/:id',
-    name: 'Edit',
-    component: Edit
-  }
 ]
 
 const router = new VueRouter({
@@ -57,15 +54,30 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
-
-  if(requiresAuth) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if(!user) next('/')
-
-      else next();
+  if(to.matched.some(record => record.meta.auth)) {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        next()
+      } else {
+        next({
+          path: "/"
+        })
+      } 
     })
-  } else next()
-});
+  } else if(to.matched.some(record => record.meta.guest)) {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        next({
+          path: '/profile'
+        })
+      } else {
+        next()
+      }
+    })
+  } else {
+    next()
+  }
+
+})
 
 export default router

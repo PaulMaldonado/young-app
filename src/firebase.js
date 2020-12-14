@@ -19,7 +19,14 @@ const firebaseConfig = {
 
   // Manejando el estado del usuario
   firebase.auth().onAuthStateChanged(user => {
-    store.dispatch('getUser', user);
+    const currentuser = firebase.auth().currentUser;
+
+    if(currentuser === user) {
+      store.dispatch('getUser', user);
+    } else {
+      console.log("No hay usuario")
+    }
+
   });
 
   export default firebase;

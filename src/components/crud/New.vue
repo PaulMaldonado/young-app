@@ -1,7 +1,7 @@
 <template>
   <div class="new-form">
       <div class="container">
-          <div class="row mt-4">
+          <div class="row">
               <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 mx-auto">
                   <div class="card form-top">
                       <div class="card-header text-header">
@@ -66,26 +66,28 @@ export default {
     data() {
         return {
             quantity: '',
-            date: ''
+            date: '',
         }
     },
 
     methods: {
         newRegister() {
            const db = firebase.firestore();
-           db.collection('users').add({
-               quantity: this.quantity,
-               date: this.date
-           })
-           .then(() => {
-               if(this.quantity === null || this.date === null) return
+           
+           db.collection("users").doc(firebase.auth().currentUser.uid)
+            .collection("users").add({
+                quantity: this.quantity,
+                date: this.date
+            })
+            .then(() => {
+                if(this.quantity === null || this.date === null) return;
 
-               this.$router.push('show')
-           })
-           .catch(error => {
-               console.error(error)
-           })
-        }
+                this.$router.push('show')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
     }
 }
 </script>

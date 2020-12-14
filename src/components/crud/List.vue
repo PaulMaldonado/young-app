@@ -14,11 +14,7 @@
                     <i class="fas fa-trash-alt"></i>
                   </span>
                 </button>
-                <router-link :to="{name: 'Edit', params: { id: user.id }}" class="btn btn-success move-left">
-                  <span>
-                    <i class="far fa-edit"></i>
-                  </span>
-                </router-link>
+              
               </div>
             </div>
           </div>
@@ -30,6 +26,7 @@
 <script>
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 export default {
     name: 'List',
@@ -42,13 +39,15 @@ export default {
 
     created() {
         this.showCollection()
+        this.showCollectionOrder
     },
 
     methods: {
         showCollection() {
         const db = firebase.firestore();
 
-        db.collection('users').onSnapshot((querySnapshot) => {
+        db.collection('users').doc(firebase.auth().currentUser.uid).collection("users")
+          .onSnapshot((querySnapshot) => {
           this.users = [];
 
           querySnapshot.forEach((doc) => {
@@ -64,14 +63,21 @@ export default {
       deleteData(id) {
         const db = firebase.firestore();
 
-        db.collection('users').doc(id).delete().then(() => {
-          console.log('deleted successfully')
-        })
-        .catch(error => {
-          console.error(error)
-        })
+        db.collection("users").doc(firebase.auth().currentUser.uid)
+          .collection("users").doc(id).delete()
+
       },
 
+    },
+
+    computed: {
+      showCollectionOrder() {
+        const db = firebase.firestore();
+
+        return {
+            users: db.collection('users').orderBy('createdAt')
+          }
+      }
     }
 }
 </script>
