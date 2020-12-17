@@ -51,7 +51,7 @@ export default {
 <style scoped>
   .profile-user {
     max-width: 100%;
-    height: 60vh;
+    height: 70vh;
     background-color: #ff3e3f;
     border-bottom-left-radius: 50% 40%;
   }
