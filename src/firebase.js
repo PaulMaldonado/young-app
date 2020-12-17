@@ -24,7 +24,7 @@ const firebaseConfig = {
     if(currentuser === user) {
       store.dispatch('getUser', user);
     } else {
-      console.log("No hay usuario")
+      store.dispathc('getUser', null);
     }
 
   });

@@ -130,10 +130,10 @@ export default {
         sessionPersistence() {
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
                 .then(() => {
-                    return this.signIn();
+                    return firebase.auth().signInWithEmailAndPassword(this.email, this.password);
                 })
                 .catch(error => {
-                    console.error(error)
+                    console.log(error)
                 })
         }
     }
