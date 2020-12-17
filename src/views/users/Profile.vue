@@ -67,7 +67,7 @@ export default {
     height: 150px;
     display: block;
     margin: 0 auto;
-    margin-top: 60px;
+    margin-top: 20px;
     border: 2px solid #ffffff;
     border-radius: 50%;
   }
